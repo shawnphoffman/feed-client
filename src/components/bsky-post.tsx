@@ -2,6 +2,7 @@ import { FeedViewPost } from '@atproto/api/dist/client/types/app/bsky/feed/defs'
 import { Record } from '@atproto/api/dist/client/types/app/bsky/feed/post'
 import { faUserCircle } from '@awesome.me/kit-ac8ad9255a/icons/classic/solid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { formatDistanceToNowStrict } from 'date-fns'
 import Link from 'next/link'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -10,6 +11,27 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 // import { Button } from './ui/button'
 import PostContent from './bsky-post-content'
 import PostEmbed from './bsky-post-embed'
+
+function formatRelativeDate(date: string) {
+	const result = formatDistanceToNowStrict(date, {
+		addSuffix: true,
+		// unit: 'minute',
+	})
+
+	// Simplify the output to get "29m," "3h," etc.
+	return result
+		.replace(' minutes', 'm')
+		.replace(' minute', 'm')
+		.replace(' hours', 'h')
+		.replace(' hour', 'h')
+		.replace(' days', 'd')
+		.replace(' day', 'd')
+		.replace(' months', 'mo')
+		.replace(' month', 'mo')
+		.replace(' years', 'y')
+		.replace(' year', 'y')
+		.replace(' ago', '')
+}
 
 type Props = {
 	feedViewPost: FeedViewPost
@@ -31,8 +53,17 @@ export async function BskyPost({ feedViewPost }: Props) {
 			</div>
 			{/* RIGHT */}
 			<div className="flex-1 flex flex-col gap-1">
-				<Link href={`https://bsky.app/profile/${author.handle}`} target="_blank" className="font-bold hover:underline">
-					{author.displayName}
+				<Link
+					href={`https://bsky.app/profile/${author.handle}`}
+					target="_blank"
+					className="font-bold group flex flex-row gap-1 items-center"
+				>
+					<span className="group-hover:underline">{author.displayName}</span>
+					<span className="font-normal text-sm text-muted-foreground flex flex-row gap-1">
+						@{author.handle}
+						<div>·</div>
+						<time dateTime={new Date(feedViewPost.post.indexedAt).toISOString()}>{formatRelativeDate(feedViewPost.post.indexedAt)}</time>
+					</span>
 				</Link>
 
 				<PostContent record={feedViewPost.post.record as Record} />
