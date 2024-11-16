@@ -1,13 +1,18 @@
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import './globals.css'
+import './app.css'
 
 import { Suspense } from 'react'
-import { GeistSans } from 'geist/font/sans'
+// import { GeistSans } from 'geist/font/sans'
+import { Bangers } from 'next/font/google'
+
+// If loading a variable font, you don't need to specify the font weight
+const bangers = Bangers({ display: 'swap', weight: '400', subsets: ['latin'] })
 import type { Metadata } from 'next'
 
-import { AppSidebar } from '@/components/app-sidebar'
+// import { AppSidebar } from '@/components/app-sidebar'
 // import { Separator } from '@/components/ui/separator'
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+// import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 
 export const metadata: Metadata = {
 	title: 'BlueSky Feed Client',
@@ -20,24 +25,23 @@ type Props = Readonly<{
 
 export default function RootLayout({ children }: Props) {
 	return (
-		<html lang="en" className={`${GeistSans.className} antialiased bg-black dark`}>
-			<body className="bg-black text-foreground">
-				<SidebarProvider>
+		<html lang="en" className={`${bangers.className} antialiased bg-black dark`}>
+			{/* <body className="bg-black text-foreground"> */}
+			<body className="">
+				{/* <SidebarProvider>
 					<AppSidebar />
-					<SidebarInset>
-						<header className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-2 bg-sidebar border-b">
+					<SidebarInset className="bg-transparent"> */}
+				{/* <header className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-2 bg-sidebar border-b">
 							<div className="flex flex-1 items-center gap-2 px-3">
 								<SidebarTrigger />
-								{/* <Separator orientation="vertical" className="mr-2 h-4" />
-								<div className="font-bold text-xl">Star Wars Feed</div> */}
 							</div>
-						</header>
-						{/* CONTENT */}
-						<div className="flex flex-1 flex-col gap-4 p-4">
-							<Suspense fallback={'loading...'}>{children}</Suspense>
-						</div>
-					</SidebarInset>
-				</SidebarProvider>
+						</header> */}
+				{/* CONTENT */}
+				<div className="flex flex-1 flex-col gap-4 p-4 max-w-screen-md mx-auto">
+					<Suspense fallback={'loading...'}>{children}</Suspense>
+				</div>
+				{/* </SidebarInset>
+				</SidebarProvider> */}
 			</body>
 		</html>
 	)

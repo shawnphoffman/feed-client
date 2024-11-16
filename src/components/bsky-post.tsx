@@ -41,7 +41,8 @@ export async function BskyPost({ feedViewPost }: Props) {
 	const author = feedViewPost.post.author
 
 	return (
-		<article className="rounded-lg border bg-card text-card-foreground shadow-sm flex-row flex gap-2 p-4">
+		// <article className="rounded-lg border bg-card text-card-foreground shadow-sm flex-row flex gap-2 p-4 comic-panel">
+		<article className="comic-panel">
 			{/* LEFT */}
 			<div>
 				<Avatar>
