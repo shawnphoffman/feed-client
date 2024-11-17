@@ -25,23 +25,13 @@ type Props = Readonly<{
 
 export default function RootLayout({ children }: Props) {
 	return (
-		<html lang="en" className={`${bangers.className} antialiased bg-black dark`}>
-			{/* <body className="bg-black text-foreground"> */}
-			<body className="">
-				{/* <SidebarProvider>
-					<AppSidebar />
-					<SidebarInset className="bg-transparent"> */}
-				{/* <header className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-2 bg-sidebar border-b">
-							<div className="flex flex-1 items-center gap-2 px-3">
-								<SidebarTrigger />
-							</div>
-						</header> */}
-				{/* CONTENT */}
-				<div className="flex flex-1 flex-col gap-4 p-4 max-w-screen-md mx-auto">
-					<Suspense fallback={'loading...'}>{children}</Suspense>
+		<html lang="en" className={`${bangers.className} antialiased bg-green-50`}>
+			<body>
+				<div className="m-0 h-dvh w-dvw overflow-scroll bg-transparent max-h-svh max-w-full">
+					<div className="flex flex-1 flex-col gap-4 p-4 mx-auto overflow-y-scroll h-fit">
+						<Suspense fallback={'loading...'}>{children}</Suspense>
+					</div>
 				</div>
-				{/* </SidebarInset>
-				</SidebarProvider> */}
 			</body>
 		</html>
 	)

@@ -39,5 +39,5 @@ export default function PostContent({ record }: { record: AppBskyFeedPost.Record
 		counter++
 	}
 
-	return <p className="text-base leading-tight break-word break-words whitespace-pre-wrap">{richText}</p>
+	return <p className="text-xl leading-tight break-word break-words whitespace-pre-wrap">{richText}</p>
 }

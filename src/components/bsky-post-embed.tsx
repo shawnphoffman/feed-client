@@ -63,19 +63,19 @@ export default function PostEmbed({ content, hideRecord }: Props) {
 				return (
 					<Link
 						href={`/profile/${record.author.did}/post/${getRkey(record)}`}
-						className="transition-colors hover:bg-neutral-100 border rounded-lg p-2 gap-1.5 w-full flex flex-col"
+						className="transition-colors hover:bg-neutral-100 border p-2 comic-image gap-1.5 w-full flex flex-col"
 					>
 						<div className="flex gap-1.5 items-center">
 							<div className="w-4 h-4 overflow-hidden rounded-full bg-neutral-300 shrink-0">
 								{/* eslint-disable-next-line @next/next/no-img-element */}
 								<img src={record.author.avatar} alt={record.author.displayName} />
 							</div>
-							<p className="line-clamp-1 text-sm">
+							<p className="line-clamp-1 text-lg">
 								<span className="font-bold">{record.author.displayName}</span>
 								<span className="text-textLight ml-1">@{record.author.handle}</span>
 							</p>
 						</div>
-						{text && <p className="text-sm">{text}</p>}
+						{text && <p className="text-lg">{text}</p>}
 						{record.embeds?.map(embed => <PostEmbed key={embed.$type as string} content={embed} hideRecord />)}
 					</Link>
 				)
@@ -172,10 +172,10 @@ export default function PostEmbed({ content, hideRecord }: Props) {
 
 function Info({ children }: { children: ReactNode }) {
 	return (
-		<div className="w-full rounded-lg border py-2 px-2.5 flex-row flex gap-2 bg-neutral-50">
+		<div className="w-full border py-2 px-2.5 flex-row flex gap-2 bg-neutral-50">
 			{/* <img src={infoIcon} alt="" className="w-4 h-4 shrink-0 mt-0.5" /> */}
 			<FontAwesomeIcon icon={faInfoCircle} className="w-4 h-4 mt-0.5" />
-			<p className="text-sm text-textLight">{children}</p>
+			<p className="text-lg text-textLight">{children}</p>
 		</div>
 	)
 }
@@ -187,33 +187,39 @@ function ImageEmbed({ content }: { content: AppBskyEmbedImages.View }) {
 				<img
 					src={content.images[0].thumb}
 					alt={content.images[0].alt}
-					className="w-full rounded-lg overflow-hidden object-cover h-auto max-h-[1000px]"
+					className="w-full overflow-hidden object-cover comic-image -rotate-1 h-auto max-h-[1000px]"
 				/>
 			)
 		case 2:
 			return (
-				<div className="flex gap-1 rounded-lg overflow-hidden w-full aspect-[2/1]">
+				<div className="flex gap-1 overflow-hidden w-full aspect-[2/1]">
 					{content.images.map((image, i) => (
-						<img key={i} src={image.thumb} alt={image.alt} className="w-1/2 h-full object-cover rounded-sm" />
+						<img key={i} src={image.thumb} alt={image.alt} className="w-1/2 h-full object-cover rotate-2 comic-image" />
 					))}
 				</div>
 			)
 		case 3:
 			return (
-				<div className="flex gap-1 rounded-lg overflow-hidden w-full aspect-[2/1]">
-					<img src={content.images[0].thumb} alt={content.images[0].alt} className="flex-[3] object-cover rounded-sm" />
+				<div className="flex gap-1 overflow-hidden w-full aspect-[2/1]">
+					<img src={content.images[0].thumb} alt={content.images[0].alt} className="flex-[3] object-cover -rotate-1 comic-image" />
 					<div className="flex flex-col gap-1 flex-[2]">
 						{content.images.slice(1).map((image, i) => (
-							<img key={i} src={image.thumb} alt={image.alt} className="w-full h-full object-cover rounded-sm" />
+							<img key={i} src={image.thumb} alt={image.alt} className="w-full h-full object-cover rotate-1 comic-image" />
 						))}
 					</div>
 				</div>
 			)
 		case 4:
 			return (
-				<div className="grid grid-cols-2 gap-1 rounded-lg overflow-hidden">
+				// <div className="grid grid-cols-2 gap-3 overflow-hidden">
+				<div className="grid grid-cols-2 gap-4">
 					{content.images.map((image, i) => (
-						<img key={i} src={image.thumb} alt={image.alt} className="aspect-square w-full object-cover rounded-sm" />
+						<img
+							key={i}
+							src={image.thumb}
+							alt={image.alt}
+							className={`aspect-square w-full object-cover ${i % 3 === 0 ? 'rotate-1' : '-rotate-1'} comic-image`}
+						/>
 					))}
 				</div>
 			)
@@ -233,11 +239,11 @@ function ExternalEmbed({ content }: { content: AppBskyEmbedExternal.View }) {
 	}
 
 	return (
-		<Link href={content.external.uri} className="w-full rounded-lg overflow-hidden border flex flex-col items-stretch">
+		<Link href={content.external.uri} className="w-full comic-image overflow-hidden border flex flex-col items-stretch">
 			{content.external.thumb && <img alt="" src={content.external.thumb} className="aspect-[1.91/1] object-cover" />}
 			<div className="py-2 px-3 flex flex-col gap-1">
 				<p className="font-semibold line-clamp-3 leading-tight">{content.external.title}</p>
-				<p className="text-sm line-clamp-2 leading-tight">{content.external.description}</p>
+				<p className="text-lg line-clamp-2 leading-tight">{content.external.description}</p>
 				<Separator className="my-1" />
 
 				<p className="text-xs text-muted-foreground line-clamp-1 flex flex-row gap-1 items-center">
@@ -263,19 +269,19 @@ function GenericWithImageEmbed({
 	description?: string
 }) {
 	return (
-		<Link href={href} className="w-full rounded-lg border py-2 px-3 flex flex-col gap-2">
+		<Link href={href} className="w-full border py-2 px-3 flex flex-col gap-2">
 			<div className="flex gap-2.5 items-center">
 				{image ? (
-					<img src={image} alt={title} className="w-8 h-8 rounded-md bg-neutral-300 shrink-0" />
+					<img src={image} alt={title} className="w-8 h-8 bg-neutral-300 shrink-0" />
 				) : (
-					<div className="w-8 h-8 rounded-md bg-brand shrink-0" />
+					<div className="w-8 h-8 bg-brand shrink-0" />
 				)}
 				<div className="flex-1">
-					<p className="font-bold text-sm">{title}</p>
-					<p className="text-textLight text-sm">{subtitle}</p>
+					<p className="font-bold text-lg">{title}</p>
+					<p className="text-textLight text-lg">{subtitle}</p>
 				</div>
 			</div>
-			{description && <p className="text-textLight text-sm">{description}</p>}
+			{description && <p className="text-textLight text-lg">{description}</p>}
 		</Link>
 	)
 }
@@ -290,7 +296,7 @@ function VideoEmbed({ content }: { content: AppBskyEmbedVideo.View }) {
 	}
 
 	return (
-		<div className="w-full overflow-hidden rounded-lg aspect-square relative" style={{ aspectRatio: `${aspectRatio} / 1` }}>
+		<div className="w-full overflow-hidden comic-image rotate-1 aspect-square relative" style={{ aspectRatio: `${aspectRatio} / 1` }}>
 			<img src={content.thumbnail} alt={content.alt} className="object-cover size-full" />
 			<div className="size-24 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/50 flex items-center justify-center">
 				{/* <img src={playIcon} className="object-cover size-3/5" /> */}
@@ -309,21 +315,21 @@ function StarterPackEmbed({ content }: { content: AppBskyGraphDefs.StarterPackVi
 	const imageUri = getStarterPackImage(content)
 
 	return (
-		<Link href={starterPackHref} className="w-full rounded-lg overflow-hidden border flex flex-col items-stretch">
+		<Link href={starterPackHref} className="w-full overflow-hidden border flex flex-col items-stretch">
 			<img alt="" src={imageUri} className="aspect-[1.91/1] object-cover" />
 			<div className="py-3 px-4">
 				<div className="flex space-x-2 items-center">
 					<FontAwesomeIcon icon={faShapes} className="w-10 h-10" />
 					<div>
 						<p className="font-semibold leading-[21px]">{content.record.name}</p>
-						<p className="text-sm text-textLight line-clamp-2 leading-[18px]">
+						<p className="text-lg text-textLight line-clamp-2 leading-[18px]">
 							Starter pack by {content.creator.displayName || `@${content.creator.handle}`}
 						</p>
 					</div>
 				</div>
-				{content.record.description && <p className="text-sm mt-1">{content.record.description}</p>}
+				{content.record.description && <p className="text-lg mt-1">{content.record.description}</p>}
 				{!!content.joinedAllTimeCount && content.joinedAllTimeCount > 50 && (
-					<p className="text-sm font-semibold text-textLight mt-1">{content.joinedAllTimeCount} users have joined!</p>
+					<p className="text-lg font-semibold text-textLight mt-1">{content.joinedAllTimeCount} users have joined!</p>
 				)}
 			</div>
 		</Link>

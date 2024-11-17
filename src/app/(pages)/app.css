@@ -24,30 +24,31 @@
 }
 
 body {
-	margin: 0;
-	min-width: 320px;
-	min-height: 100vh;
+	@apply m-0 h-dvh w-dvw overflow-hidden bg-neutral-500 max-h-svh max-w-full;
 	background-image: url('/bg.svg');
-	/* background-size: cover; */
-	/* background-size: contain; */
-	background-size: auto;
-	/* background-repeat: no-repeat; */
-	background-repeat: repeat;
+	/* background-size: auto;
+	background-repeat: repeat; */
+	background-size: cover;
+	background-repeat: no-repeat;
 	background-position: top;
 }
 
+h1.title-burst {
+	@apply z-10 absolute m-auto top-2 inset-x-0 text-black text-center text-5xl w-fit -rotate-2 border-black bg-white shadow-[4px_4px_0_black] mb-8 mx-auto px-8 py-4 border-2 border-solid;
+	text-shadow: 2px 2px 0 #fff;
+}
+
 .comic-panel {
+	@apply flex flex-row gap-2 text-black text-xl;
 	background-color: var(--panel-color);
 	border: 3px solid var(--border-color);
 	box-shadow:
 		8px 8px 0px #fff,
 		12px 12px 0px var(--border-color);
 	padding: 1.5rem;
-	/* margin: 1.5rem; */
 	position: relative;
 	transform: rotate(-1deg);
 	transition: transform 0.3s ease;
-	@apply text-black;
 }
 
 .comic-panel:hover {
@@ -171,25 +172,6 @@ select:focus {
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-	margin: 0;
-	color: var(--text-color);
-	text-align: center;
-	font-size: 2.5rem;
-	text-shadow: 2px 2px 0 #fff;
-}
-
-.title-burst {
-	position: relative;
-	background: #fff;
-	padding: 1rem 2rem;
-	margin: -2rem auto 2rem;
-	width: fit-content;
-	transform: rotate(-2deg);
-	border: 2px solid var(--border-color);
-	box-shadow: 4px 4px 0 var(--border-color);
-}
-
 .title-burst::before,
 .title-burst::after {
 	content: '';
@@ -212,4 +194,8 @@ h1 {
 	transform: rotate(45deg);
 	bottom: -7px;
 	right: 30px;
+}
+
+.comic-image {
+	@apply shadow-[3px_3px_0px_white,6px_6px_0px_rgba(0,0,0,0.5)]  border-4 border-solid border-black;
 }

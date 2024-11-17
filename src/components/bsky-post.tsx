@@ -45,7 +45,7 @@ export async function BskyPost({ feedViewPost }: Props) {
 		<article className="comic-panel">
 			{/* LEFT */}
 			<div>
-				<Avatar>
+				<Avatar className="border-[3px] rounded-none border-black">
 					<AvatarImage src={author.avatar} alt={author.displayName} />
 					<AvatarFallback>
 						<FontAwesomeIcon icon={faUserCircle} size="xl" />
@@ -57,10 +57,10 @@ export async function BskyPost({ feedViewPost }: Props) {
 				<Link
 					href={`https://bsky.app/profile/${author.handle}`}
 					target="_blank"
-					className="font-bold group flex flex-row gap-1 items-center"
+					className="font-medium group flex flex-row gap-2 items-center text-3xl"
 				>
 					<span className="group-hover:underline">{author.displayName}</span>
-					<span className="font-normal text-sm text-muted-foreground flex flex-row gap-1">
+					<span className="font-normal text-lg text-muted-foreground flex flex-row gap-1">
 						@{author.handle}
 						<div>·</div>
 						<time dateTime={new Date(feedViewPost.post.indexedAt).toISOString()}>{formatRelativeDate(feedViewPost.post.indexedAt)}</time>
