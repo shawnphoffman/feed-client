@@ -1,17 +1,17 @@
 import { HtmlHTMLAttributes } from 'react'
+import Link from 'next/link'
 
 type Props = {
 	href: string
 	className?: string
 } & HtmlHTMLAttributes<HTMLAnchorElement>
 
-export default function Link({ href, className, ...props }: Props) {
+export default function BskyLink({ href, className, ...props }: Props) {
 	return (
-		<a
+		<Link
+			prefetch={false}
 			href={`${href.startsWith('http') ? href : `https://bsky.app${href}`}`}
 			target="_blank"
-			// rel="noopener noreferrer nofollow"
-			// onClick={evt => evt.stopPropagation()}
 			className={`cursor-pointer ${className || ''}`}
 			{...props}
 		/>

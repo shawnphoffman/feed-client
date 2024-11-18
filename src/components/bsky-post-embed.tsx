@@ -1,3 +1,5 @@
+'use client'
+
 /* eslint-disable @next/next/no-img-element */
 import { ReactNode } from 'react'
 import {
@@ -63,7 +65,7 @@ export default function PostEmbed({ content, hideRecord }: Props) {
 				return (
 					<Link
 						href={`/profile/${record.author.did}/post/${getRkey(record)}`}
-						className="transition-colors hover:bg-neutral-100 border p-2 comic-image gap-1.5 w-full flex flex-col"
+						className="transition-colors hover:bg-neutral-100 border p-2 image gap-1.5 w-full flex flex-col"
 					>
 						<div className="flex gap-1.5 items-center">
 							<div className="w-4 h-4 overflow-hidden rounded-full bg-neutral-300 shrink-0">
@@ -187,24 +189,24 @@ function ImageEmbed({ content }: { content: AppBskyEmbedImages.View }) {
 				<img
 					src={content.images[0].thumb}
 					alt={content.images[0].alt}
-					className="w-full overflow-hidden object-cover comic-image -rotate-1 h-auto max-h-[1000px]"
+					className="w-full overflow-hidden object-cover image -rotate-1 h-auto max-h-[1000px]"
 				/>
 			)
 		case 2:
 			return (
 				<div className="flex gap-1 overflow-hidden w-full aspect-[2/1]">
 					{content.images.map((image, i) => (
-						<img key={i} src={image.thumb} alt={image.alt} className="w-1/2 h-full object-cover rotate-2 comic-image" />
+						<img key={i} src={image.thumb} alt={image.alt} className="w-1/2 h-full object-cover rotate-2 image" />
 					))}
 				</div>
 			)
 		case 3:
 			return (
 				<div className="flex gap-1 overflow-hidden w-full aspect-[2/1]">
-					<img src={content.images[0].thumb} alt={content.images[0].alt} className="flex-[3] object-cover -rotate-1 comic-image" />
+					<img src={content.images[0].thumb} alt={content.images[0].alt} className="flex-[3] object-cover -rotate-1 image" />
 					<div className="flex flex-col gap-1 flex-[2]">
 						{content.images.slice(1).map((image, i) => (
-							<img key={i} src={image.thumb} alt={image.alt} className="w-full h-full object-cover rotate-1 comic-image" />
+							<img key={i} src={image.thumb} alt={image.alt} className="w-full h-full object-cover rotate-1 image" />
 						))}
 					</div>
 				</div>
@@ -218,7 +220,7 @@ function ImageEmbed({ content }: { content: AppBskyEmbedImages.View }) {
 							key={i}
 							src={image.thumb}
 							alt={image.alt}
-							className={`aspect-square w-full object-cover ${i % 3 === 0 ? 'rotate-1' : '-rotate-1'} comic-image`}
+							className={`aspect-square w-full object-cover ${i % 3 === 0 ? 'rotate-1' : '-rotate-1'} image`}
 						/>
 					))}
 				</div>
@@ -239,7 +241,8 @@ function ExternalEmbed({ content }: { content: AppBskyEmbedExternal.View }) {
 	}
 
 	return (
-		<Link href={content.external.uri} className="w-full comic-image overflow-hidden border flex flex-col items-stretch">
+		// <Link href={content.external.uri} className="w-full image overflow-hidden border flex flex-col items-stretch">
+		<div className="w-full image overflow-hidden border flex flex-col items-stretch">
 			{content.external.thumb && <img alt="" src={content.external.thumb} className="aspect-[1.91/1] object-cover" />}
 			<div className="py-2 px-3 flex flex-col gap-1">
 				<p className="font-semibold line-clamp-3 leading-tight">{content.external.title}</p>
@@ -251,7 +254,8 @@ function ExternalEmbed({ content }: { content: AppBskyEmbedExternal.View }) {
 					{toNiceDomain(content.external.uri)}
 				</p>
 			</div>
-		</Link>
+		</div>
+		// </Link>
 	)
 }
 
@@ -296,7 +300,7 @@ function VideoEmbed({ content }: { content: AppBskyEmbedVideo.View }) {
 	}
 
 	return (
-		<div className="w-full overflow-hidden comic-image rotate-1 aspect-square relative" style={{ aspectRatio: `${aspectRatio} / 1` }}>
+		<div className="w-full overflow-hidden image rotate-1 aspect-square relative" style={{ aspectRatio: `${aspectRatio} / 1` }}>
 			<img src={content.thumbnail} alt={content.alt} className="object-cover size-full" />
 			<div className="size-24 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/50 flex items-center justify-center">
 				{/* <img src={playIcon} className="object-cover size-3/5" /> */}

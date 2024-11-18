@@ -1,5 +1,6 @@
 import { AppBskyFeedPost, AppBskyRichtextFacet, RichText } from '@atproto/api'
 
+// import { comic } from '@/app/(pages)/layout'
 import Link from './bsky-post-link'
 
 export default function PostContent({ record }: { record: AppBskyFeedPost.Record | null }) {
@@ -39,5 +40,6 @@ export default function PostContent({ record }: { record: AppBskyFeedPost.Record
 		counter++
 	}
 
-	return <p className="text-xl leading-tight break-word break-words whitespace-pre-wrap">{richText}</p>
+	// return <p className={`text-xl font-bold leading-[1.15] break-word break-words whitespace-pre-wrap ${comic.className}`}>{richText}</p>
+	return <p className={`text-xl font-normal leading-[1.15] break-word break-words whitespace-pre-wrap`}>{richText}</p>
 }

@@ -21,7 +21,7 @@ export default async function Homepage() {
 	}
 
 	return (
-		<div className="mx-auto max-w-3xl">
+		<div className="mx-auto max-w-3xl w-full">
 			<h1 className="title-burst">Star Wars Feed</h1>
 			<div className="flex flex-col gap-8 justify-center mt-20">
 				{data.feed.map(feedViewPost => (

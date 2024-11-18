@@ -7,15 +7,12 @@ import Link from 'next/link'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
-// import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
-// import { Button } from './ui/button'
 import PostContent from './bsky-post-content'
 import PostEmbed from './bsky-post-embed'
 
 function formatRelativeDate(date: string) {
 	const result = formatDistanceToNowStrict(date, {
 		addSuffix: true,
-		// unit: 'minute',
 	})
 
 	// Simplify the output to get "29m," "3h," etc.
@@ -40,11 +37,13 @@ type Props = {
 export async function BskyPost({ feedViewPost }: Props) {
 	const author = feedViewPost.post.author
 
+	const stringEmbed = JSON.stringify(feedViewPost.post.embed)
+	const cleanEmbed = stringEmbed ? JSON.parse(stringEmbed) : null
+
 	return (
-		// <article className="rounded-lg border bg-card text-card-foreground shadow-sm flex-row flex gap-2 p-4 comic-panel">
-		<article className="comic-panel">
+		<article className="panel">
 			{/* LEFT */}
-			<div>
+			<div className="hidden xs:block">
 				<Avatar className="border-[3px] rounded-none border-black">
 					<AvatarImage src={author.avatar} alt={author.displayName} />
 					<AvatarFallback>
@@ -53,14 +52,14 @@ export async function BskyPost({ feedViewPost }: Props) {
 				</Avatar>
 			</div>
 			{/* RIGHT */}
-			<div className="flex-1 flex flex-col gap-1">
+			<div className="flex-1 flex flex-col gap-3">
 				<Link
 					href={`https://bsky.app/profile/${author.handle}`}
 					target="_blank"
-					className="font-medium group flex flex-row gap-2 items-center text-3xl"
+					className="font-medium group flex flex-col sm:flex-row sm:gap-2 sm:items-center text-3xl"
 				>
 					<span className="group-hover:underline">{author.displayName}</span>
-					<span className="font-normal text-lg text-muted-foreground flex flex-row gap-1">
+					<span className="font-normal text-lg text-muted-foreground flex flex-row gap-1 leading-none">
 						@{author.handle}
 						<div>·</div>
 						<time dateTime={new Date(feedViewPost.post.indexedAt).toISOString()}>{formatRelativeDate(feedViewPost.post.indexedAt)}</time>
@@ -69,18 +68,7 @@ export async function BskyPost({ feedViewPost }: Props) {
 
 				<PostContent record={feedViewPost.post.record as Record} />
 
-				<PostEmbed content={feedViewPost.post.embed} />
-
-				{/* <HoverCard>
-					<HoverCardTrigger>
-						<Button variant={'secondary'}>JSON</Button>
-					</HoverCardTrigger>
-					<HoverCardContent className="w-10/12">
-						<pre>
-							<code className="code text-xs">{JSON.stringify(feedViewPost.post.record, null, 2)}</code>
-						</pre>
-					</HoverCardContent>
-				</HoverCard> */}
+				<PostEmbed content={cleanEmbed} />
 			</div>
 		</article>
 	)
