@@ -4,7 +4,7 @@ import { agent } from '@/api'
 import { BskyPost } from '@/components/bsky-post'
 
 // Every 15 minutes
-export const revalidate = 900
+// export const revalidate = 900
 
 export default async function Homepage() {
 	// await new Promise(resolve => setTimeout(resolve, 10000))
