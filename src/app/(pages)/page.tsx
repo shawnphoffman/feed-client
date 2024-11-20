@@ -20,14 +20,5 @@ export default async function Homepage() {
 		notFound()
 	}
 
-	return (
-		<div className="mx-auto max-w-3xl w-full">
-			<h1 className="title-burst">Star Wars Feed</h1>
-			<div className="flex flex-col gap-8 justify-center mt-20">
-				{data.feed.map(feedViewPost => (
-					<BskyPost key={feedViewPost.post.cid} feedViewPost={feedViewPost} />
-				))}
-			</div>
-		</div>
-	)
+	return data.feed.map(feedViewPost => <BskyPost key={feedViewPost.post.cid} feedViewPost={feedViewPost} />)
 }
