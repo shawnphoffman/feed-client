@@ -194,21 +194,28 @@ function ImageEmbed({ content }: { content: AppBskyEmbedImages.View }) {
 			)
 		case 2:
 			return (
-				<div className="flex gap-1 overflow-hidden w-full aspect-[2/1]">
+				<div className="grid grid-cols-2 gap-4">
 					{content.images.map((image, i) => (
-						<img key={i} src={image.thumb} alt={image.alt} className="w-1/2 h-full object-cover rotate-2 image" />
+						<img
+							key={i}
+							src={image.thumb}
+							alt={image.alt}
+							className={`aspect-square w-full object-cover ${i % 2 === 0 ? 'rotate-1' : '-rotate-1'} image`}
+						/>
 					))}
 				</div>
 			)
 		case 3:
 			return (
-				<div className="flex gap-1 overflow-hidden w-full aspect-[2/1]">
-					<img src={content.images[0].thumb} alt={content.images[0].alt} className="flex-[3] object-cover -rotate-1 image" />
-					<div className="flex flex-col gap-1 flex-[2]">
-						{content.images.slice(1).map((image, i) => (
-							<img key={i} src={image.thumb} alt={image.alt} className="w-full h-full object-cover rotate-1 image" />
-						))}
-					</div>
+				<div className="grid grid-cols-3 gap-4">
+					{content.images.map((image, i) => (
+						<img
+							key={i}
+							src={image.thumb}
+							alt={image.alt}
+							className={`aspect-square w-full object-cover ${i % 2 === 0 ? 'rotate-1' : '-rotate-1'} image`}
+						/>
+					))}
 				</div>
 			)
 		case 4:
